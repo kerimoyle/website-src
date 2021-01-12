@@ -5,7 +5,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 
 import DoxygenXml from 'vue-doxygen-xml'
-import SphinxXml from 'vue-sphinx-xml' 
+import SphinxXml from 'vue-sphinx-xml'
 import VueHighlightJS from 'vue-highlightjs'
 
 import 'highlight.js/styles/xcode.css'

@@ -3,7 +3,10 @@
     <v-container>
       <v-row>
         <v-col>
-          <BreadCrumbs />
+          <BreadCrumbs 
+            v-bind:versionChoices="getVersions()" 
+            :currentVersion="`${$route.params.version}`"
+            :versionType="'api'"/>
           <doxygen-xml
             :baseURL="`/data/doxygen/${$route.params.version}`"
             @updated="updated"
@@ -17,6 +20,7 @@
 <script>
 import { DoxygenXml } from 'vue-doxygen-xml'
 import BreadCrumbs from '@/components/BreadCrumbs'
+import { getDoxygenVersions } from '../js/versions'
 
 export default {
   name: 'APIPage',
@@ -25,6 +29,9 @@ export default {
     BreadCrumbs,
   },
   methods: {
+    getVersions() {
+      return getDoxygenVersions()
+    },
     updated() {
       this.$store.commit('togglePageContentChanged')
     },

@@ -1,10 +1,8 @@
 <template>
-
   <v-container>
     <v-row>
       <v-col>
         <BreadCrumbs />
-        
         <h1>API Reference</h1>
         <ul>
           <li

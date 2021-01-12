@@ -12,7 +12,7 @@ export default new Vuex.Store({
     transitionDelay: 300, // This number has to be higher than page transition
     pageContentChanged: false,
     breadcrumbs: [],
-    lastURL: ['','',''],
+    lastURL: ['', '', ''],
   },
   getters: {
     getSidebarOpen: state => {
@@ -35,7 +35,7 @@ export default new Vuex.Store({
     },
     getBreadcrumbs: state => {
       return state.breadcrumbs
-    }
+    },
   },
   mutations: {
     setSidebarOpen: (state, value) => {

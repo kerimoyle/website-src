@@ -23,7 +23,6 @@
 </template>
 
 <script>
-
 import AboutContent from '@/components/AboutContent'
 import DevelopersContent from '@/components/DevelopersContent'
 import DownloadContent from '@/components/DownloadContent'

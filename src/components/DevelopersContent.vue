@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <h1>Developers</h1>
-        <p>TODO: Information for developers goes here :) </p>
+        <p>TODO: Information for developers goes here :)</p>
       </v-col>
     </v-row>
   </v-container>

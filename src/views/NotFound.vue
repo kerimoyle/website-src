@@ -7,7 +7,6 @@
         <router-link to="/">Back to the home page</router-link>
       </v-col>
     </v-row>
-  
   </v-container>
 </template>
 

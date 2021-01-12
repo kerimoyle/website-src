@@ -2,33 +2,54 @@ name: Deploy to github pages
 on:
   push:
     branches:
-      - master
+      - production
+      - staging
 jobs:
   github-deploy:
-    name: Deploying to github.io
+    name: Deploying website
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js for use with actions
-        uses: actions/setup-node@v1.1.0
+        uses: actions/setup-node@v1.4.4
         with:
-          version:  12.x
+          version: 12.x
 
       - name: Checkout branch
         uses: actions/checkout@v2
 
-      - name: Setup access to libcellml.github.io
+      - name: Create ~/.ssh directory
         run: |
           mkdir ~/.ssh
+
+      - name: Setup access to libcellml.org website
+        if: github.ref == 'refs/heads/production'
+        run: |
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/libcellml_deploy_rsa
           chmod 600 ~/.ssh/libcellml_deploy_rsa
           echo "${{ secrets.DEPLOY_SSH_KEY_PUB }}" > ~/.ssh/libcellml_deploy_rsa.pub
-          echo -e "Host github.com\n  IdentityFile ~/.ssh/libcellml_deploy_rsa" > ~/.ssh/config
+          echo -e "\nHost github.com\n  IdentityFile ~/.ssh/libcellml_deploy_rsa\n" >> ~/.ssh/config
+          echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" > ~/.ssh/known_hosts
+
+      - name: Setup access to staging.libcellml.org website
+        if: github.ref == 'refs/heads/staging'
+        run: |
+          echo "${{ secrets.STAGING_DEPLOY_SSH_KEY }}" > ~/.ssh/staging_libcellml_deploy
+          chmod 600 ~/.ssh/staging_libcellml_deploy
+          echo "${{ secrets.STAGING_DEPLOY_SSH_KEY_PUB }}" > ~/.ssh/staging_libcellml_deploy.pub
+          echo -e "\nHost github.com\n  IdentityFile ~/.ssh/staging_libcellml_deploy\n" >> ~/.ssh/config
           echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" > ~/.ssh/known_hosts
 
       - name: Clean install dependencies
         run: npm ci
 
-      - name: Run deploy script
+      - name: Run production deploy script
+        if: github.ref == 'refs/heads/production'
         run: |
           git config user.name hsorby && git config user.email h.sorby@auckland.ac.nz
           npm run github-deploy
+
+      - name: Run staging deploy script
+        if: github.ref == 'refs/heads/staging'
+        run: |
+          git config user.name hsorby && git config user.email h.sorby@auckland.ac.nz
+          npm run github-deploy -- staging

@@ -4,7 +4,8 @@ import Home from '@/views/Home.vue'
 
 import store from '@/store'
 
-import { calculateBreadcrumbs } from './breadcrumbs'
+import { calculateBreadcrumbs, calculateSphinxVersion, calculateDoxygenVersion } from './breadcrumbs'
+import { getDoxygenVersions, getSphinxVersions } from '../js/versions'
 
 Vue.use(VueRouter)
 
@@ -36,9 +37,10 @@ const routes = [
   },
   {
     path: '/documentation/api',
-    name: 'APIReference',
-    component: () =>
-      import(/* webpackChunkName: "doxygen" */ '../views/HelpAPI.vue'),
+    redirect: to => {
+      // Defaults to latest version, if not specified.
+      return '/documentation/api/' + getDoxygenVersions()[0]
+    }
   },
   {
     path: '/documentation/tutorials/:version/:pageName*',
@@ -48,10 +50,17 @@ const routes = [
       import(/* webpackChunkName: "sphinx" */ '../views/HelpTutorialsPage.vue'),
   },
   {
-    path: '/documentation/tutorials',
+    path: '/documentation/tutorials/:version',
     name: 'Tutorials',
     component: () =>
       import(/* webpackChunkName: "sphinx" */ '../views/HelpTutorials.vue'),
+  },
+  {
+    path: '/documentation/tutorials',
+    redirect: to => {
+      // Defaults to latest version, if not specified.
+      return '/documentation/tutorials/' + getSphinxVersions()[0]
+    }
   },
   {
     path: '/developers',
@@ -122,17 +131,14 @@ const createRouter = () => {
 const router = createRouter()
 
 router.beforeEach((to, from, next) => {
-
   store.commit('setBreadcrumbs', calculateBreadcrumbs(to))
   store.commit('updateLastURL', to.path)
-
   next()
 })
 
 router.afterEach((to, from) => {
   if (to.name !== from.name) {
     store.commit('togglePageContentChanged')
-
   }
 })
 

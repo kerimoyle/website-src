@@ -6,7 +6,7 @@
           <h1>Downloading libCellML</h1>
           <p>TODO: NB None of these buttons are linked to anything.</p>
           <v-row>
-            <v-col class='col-12 col-md-4'>
+            <v-col class="col-12 col-md-4">
               <v-btn outlined disabled>C++ Libraries</v-btn>
             </v-col>
             <v-col class="col-12 col-md-4">
@@ -22,7 +22,9 @@
             </v-col>
           </v-row>
 
-          <p>TODO: Need to write about dependencies and latest versions here too. </p>
+          <p>
+            TODO: Need to write about dependencies and latest versions here too.
+          </p>
         </div>
       </v-col>
     </v-row>

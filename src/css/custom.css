@@ -11,7 +11,8 @@
     --text-colour: #444444;
     --link-colour: #888888;
     --pale-grey:#dddddd;
-
+    --warning-background: lightgoldenrodyellow;
+    --warning-text: var(--deep-red);
 
     --terminal-colour: var(--pale-grey);
 }
@@ -20,6 +21,7 @@
 #pageContent {
     max-width: 900px;
     float: left;
+    padding-top: 0;
 }
 
 h1 {
@@ -132,7 +134,7 @@ section {
     direction: rtl; /* This is so that it will collapse from the left on small screens */
     overflow: hidden;
     text-overflow: ellipsis;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .breadcrumbs * {
@@ -142,6 +144,7 @@ section {
 
 .v-breadcrumbs {
     padding: 0 10px 0 0;
+    flex-wrap: nowrap;
 }
 
 /*  At present the menu width at 100% jumps to two lines when window width is less than 848px.  

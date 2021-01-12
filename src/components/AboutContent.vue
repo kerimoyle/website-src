@@ -4,7 +4,6 @@
       <v-col>
         <h1>About libCellML</h1>
 
-        
         <h3>Questions and comments</h3>
         <p>
           The library is intended to be lightweight and focused purely in

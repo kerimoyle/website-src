@@ -1,15 +1,12 @@
 export default {
-
-  addClickHandlerToggles: function () {
+  addClickHandlerToggles: function() {
     // Event capture for the "toggle" class:
     let headers = document.querySelectorAll('.header, .header-left')
 
     headers.forEach(header => {
-
       header.classList.add('inactive')
 
-      header.addEventListener('click', function () {
-
+      header.addEventListener('click', function() {
         let contents = header.nextElementSibling
         while (contents !== null) {
           contents.style.display =
@@ -23,10 +20,10 @@ export default {
     })
   },
 
-  addClickHandlerTabs: function () {
+  addClickHandlerTabs: function() {
     let tabNames = document.querySelectorAll('.tab2name')
     tabNames.forEach(tabName => {
-      tabName.addEventListener('click', function () {
+      tabName.addEventListener('click', function() {
         // Turn other tabs off.
         let group = tabName.parentElement.parentElement
         group.querySelectorAll('.tab2').forEach((tab) => {
@@ -42,9 +39,8 @@ export default {
         if (current) {
           current.classList.add('active')
           current.classList.remove('inactive')
-        }
-        else {
-          alert("oops")
+        } else {
+          alert('oops')
         }
         tabName.classList.add('active')
         tabName.classList.remove('inactive')
@@ -52,19 +48,19 @@ export default {
     })
   },
 
-  processSphinxTabs: function () {
-    // KRM: Not a fan of this.  Processing should be done in getting 
+  processSphinxTabs: function() {
+    // KRM: Not a fan of this.  Processing should be done in getting
     // this into XML format, not in the browser!
 
     // <container classes="sphinx-tabs"> ----> turns into tabs2
-    // .... add tab2menu div ... 
+    // .... add tab2menu div ...
     //   <container classes="dummy">   -------------------->   turns into tab2
     //     <container classes="item"> -------> turns into tab2name, moved into menu
     //         <container classes="dummy">  ------------------> deleted
     //             <paragraph>C++</paragraph> -------> copied up one level
     //         </container>
     //     </container>
-    //     <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qysr active"> 
+    //     <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qysr active">
     //     </container>
     //     <literal_block/>
 
@@ -72,7 +68,6 @@ export default {
 
     tabGroups.forEach((group, groupIndex) => {
       if (!group.querySelector('.tab2menu')) {
-
         // Make a menu if one doesn't exist
         let menu = document.createElement('div')
         menu.classList.add('tab2menu')
@@ -81,12 +76,11 @@ export default {
         let firstPanel = group.firstElementChild
 
         // Iterate through children and give each the tab2 class
-        let tabIndex = 0;
+        let tabIndex = 0
         let tab = group.firstElementChild
         let activeClass = 'active'
 
         while (tab !== null) {
-
           // Children become tab2
           tab.classList.add('tab2')
           tab.classList.add('inactive')
@@ -94,7 +88,6 @@ export default {
 
           // Each tab has a header in the class "item", turn it into a tab2name
           let name = tab.querySelector('.container .item')
-          
           if (name) {
             name.classList.add('tab2name')
             name.classList.add(activeClass)
