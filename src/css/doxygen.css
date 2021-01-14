@@ -79,3 +79,19 @@ section[id^="classlibcellml"]
 section {
     padding-top: 1rem;
 }
+
+/* Namespace definitions and code needs a bit of extra help. */
+.typedef-definition {
+    font-family: monospace;
+    font-weight: 500;
+    padding-left: 2em;
+}
+
+.typedef-linked-text {
+    font-family: monospace;
+}
+
+.typedef-name {
+    color: var(--mid-red);
+    font-weight: 500;
+}
