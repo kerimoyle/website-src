@@ -65,7 +65,7 @@
 }
 
 h1 {
-    color: var(--mid-red);
+    color: var(--deep-red);
     margin-bottom: 0.5em;
     border-bottom: solid 0.05rem var(--terminal-colour);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
